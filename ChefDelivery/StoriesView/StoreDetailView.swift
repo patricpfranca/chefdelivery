@@ -10,46 +10,89 @@ import SwiftUI
 struct StoreDetailView: View {
     
     let store: StoreType
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Image(store.headerImage)
-                .resizable()
-                .scaledToFit()
-            
-            HStack {
-                Text(store.name)
-                    .font(.title)
-                    .fontWeight(.bold)
-             
-                Spacer()
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading) {
+                Image(store.headerImage)
+                    .resizable()
+                    .scaledToFit()
                 
-                Image(store.logoImage)
-            }
-            .padding(.vertical, 8)
-            .padding(.horizontal)
-            
-            HStack {
-                Text(store.location)
+                HStack {
+                    Text(store.name)
+                        .font(.title)
+                        .fontWeight(.bold)
+                    
+                    Spacer()
+                    
+                    Image(store.logoImage)
+                }
+                .padding(.vertical, 8)
+                .padding(.horizontal)
                 
-                Spacer()
+                HStack(spacing: 8) {
+                    Text(store.location)
+                    
+                    Spacer()
+                    
+                    ForEach(1...store.stars, id: \.self) { _ in
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(.yellow)
+                            .font(.caption)
+                    }
+                }
+                .padding(.vertical, 8)
+                .padding(.horizontal)
                 
-                ForEach(1...store.stars, id: \.self) { _ in
-                    Image(systemName: "star.fill")
-                        .foregroundStyle(.yellow)
-                        .font(.caption)
+                Text("Produtos")
+                    .font(.title2)
+                    .bold()
+                    .padding()
+                
+                ForEach(store.products) { product in
+                    HStack {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(product.name)
+                                .fontWeight(.bold)
+                            
+                            Text(product.description)
+                                .foregroundStyle(.black.opacity(0.5))
+                            
+                            Text(product.formattedPrice)
+                        }
+                        
+                        Spacer()
+                        
+                        Image(product.image)
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(.rect(cornerRadius: 12))
+                            .frame(width: 120, height: 120)
+                            .shadow(color: .black.opacity(0.3), radius: 20, x: 6, y: 8)
+                    }
+                    .padding()
                 }
             }
-            .padding(.vertical, 8)
-            .padding(.horizontal)
-            
-            Text("Produtos")
-                .font(.title2)
-                .bold()
-                .padding()
+            .navigationTitle(store.name)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "cart")
+                            
+                            Text("Lojas")
+                        }
+                        .foregroundStyle(Color("ColorRed"))
+                    }
+
+                }
+            }
         }
-        .navigationTitle(store.name)
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
