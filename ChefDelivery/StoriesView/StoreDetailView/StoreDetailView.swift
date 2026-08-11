@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StoreDetailView: View {
     
-    let store: StoreType
+    @EnvironmentObject var store: StoreType
     @Environment(\.dismiss) var dismiss
     @State private var selectedProduct: ProductType?
     
@@ -44,5 +44,6 @@ struct StoreDetailView: View {
 }
 
 #Preview {
-    StoreDetailView(store: storesMock[0])
+    StoreDetailView()
+        .environmentObject(storesMock[0])
 }

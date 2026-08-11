@@ -88,7 +88,8 @@ struct StoresContainerView: View {
                 } else {
                     ForEach(filteredStores) { mock in
                         NavigationLink {
-                            StoreDetailView(store: mock)
+                            StoreDetailView()
+                                .environmentObject(mock)
                         } label: {
                             StoreItemView(store: mock)
                         }
