@@ -51,27 +51,34 @@ struct StoreDetailView: View {
                     .padding()
                 
                 ForEach(store.products) { product in
-                    HStack {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text(product.name)
-                                .fontWeight(.bold)
+                    
+                    NavigationLink {
+                        ProductDetailView(product: product)
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(product.name)
+                                    .fontWeight(.bold)
+                                
+                                Text(product.description)
+                                    .foregroundStyle(.black.opacity(0.5))
+                                    .multilineTextAlignment(.leading)
+                                
+                                Text(product.formattedPrice)
+                            }
                             
-                            Text(product.description)
-                                .foregroundStyle(.black.opacity(0.5))
+                            Spacer()
                             
-                            Text(product.formattedPrice)
+                            Image(product.image)
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(.rect(cornerRadius: 12))
+                                .frame(width: 120, height: 120)
+                                .shadow(color: .black.opacity(0.3), radius: 20, x: 6, y: 8)
                         }
-                        
-                        Spacer()
-                        
-                        Image(product.image)
-                            .resizable()
-                            .scaledToFit()
-                            .clipShape(.rect(cornerRadius: 12))
-                            .frame(width: 120, height: 120)
-                            .shadow(color: .black.opacity(0.3), radius: 20, x: 6, y: 8)
+                        .padding()
+                        .foregroundStyle(.black)
                     }
-                    .padding()
                 }
             }
             .navigationTitle(store.name)
