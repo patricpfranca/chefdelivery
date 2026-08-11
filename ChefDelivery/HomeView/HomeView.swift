@@ -17,17 +17,20 @@ struct HomeView: View {
                 
                 Circle()
                     .foregroundStyle(Color("ColorRed"))
-                    .frame(width: 200)
-                    .position(x: 50, y: 100)
+                    .frame(width: isAnimating ? 200 : 0)
+                    .position(x: isAnimating ? 50 : -50, y: isAnimating ? 100 : -100)
                     .blur(radius: 60)
-                    .opacity(0.5)
+                    .opacity(isAnimating ? 0.5 : 0)
                 
                 Circle()
                     .foregroundStyle(Color("ColorRedDark"))
-                    .frame(width: 200)
-                    .position(x: geometry.size.width - 50, y: geometry.size.height - 50)
+                    .frame(width: isAnimating ? 200 : 0)
+                    .position(
+                        x: isAnimating ? geometry.size.width - 50 : geometry.size.width + 50,
+                        y: isAnimating ? geometry.size.height - 50 : geometry.size.height + 50
+                    )
                     .blur(radius: 60)
-                    .opacity(0.5)
+                    .opacity(isAnimating ? 0.5 : 0)
                 
                 VStack {
                     Text("Chef Delivery")
@@ -45,7 +48,20 @@ struct HomeView: View {
                         .opacity(isAnimating ? 1 : 0)
                         .offset(y: isAnimating ? 0 : -40)
                     
-                    Spacer()
+                    Image("image")
+                        .resizable()
+                        .scaledToFit()
+                        .shadow(radius: 60)
+                        .padding(32)
+                        .gesture(
+                            DragGesture()
+                                .onChanged({ gesture in
+                                    print(gesture.translation)
+                                })
+                                .onEnded({ _ in
+                                    print("Acabou")
+                                })
+                        )
                 }
                 .onAppear(
                     perform: {
