@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class StoreType: Identifiable, ObservableObject {
+class StoreType: Identifiable, ObservableObject, Decodable {
   let id: Int
   let name: String
   let distance: Double
