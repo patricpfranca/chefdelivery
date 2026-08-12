@@ -18,6 +18,12 @@ class StoreType: Identifiable, ObservableObject, Decodable {
   let stars: Int
   let products: [ProductType]
     
+    private enum CodingKeys: String, CodingKey {
+        case id, name, location, distance, stars, products
+        case logoImage = "logo_image"
+        case headerImage = "header_image"
+    }
+    
     init(id: Int, name: String, distance: Double, logoImage: String, headerImage: String, location: String, stars: Int, products: [ProductType]) {
         self.id = id
         self.name = name
