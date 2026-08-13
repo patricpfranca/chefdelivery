@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class StoreType: Identifiable, ObservableObject, Decodable {
+nonisolated class StoreType: Identifiable, ObservableObject, Decodable, @unchecked Sendable {
   let id: Int
   let name: String
   let distance: Double
